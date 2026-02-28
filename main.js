@@ -1,22 +1,38 @@
+/* переход между окнами для регистрации и логирования */
 const ToLogLink = document.getElementById('to-log');
 const ToRegLink = document.getElementById('to-reg');
 
+
+/* окна */
 const loginWindow = document.getElementById('LoginWindow');
 const RegWindow = document.getElementById('RegWindow');
 const MainWindow = document.getElementById('MainWindow');
+const TransferWindow = document.getElementById('TransferWindow');
 
+
+/* инпуты */
 const login = document.getElementById('login');
 const password = document.getElementById('password');
-const createPassword = document.getElementById('CreatePassword')
+const createPassword = document.getElementById('CreatePassword');
 const createLogin = document.getElementById('CreateLogin');
+const amount = document.getElementById('amount');
+const loginRecipient = document.getElementById('loginRecipient');
 
+
+/* Кнопки */
 const ButtonLogin = document.getElementById('LoginButton');
 const ButtonRegister = document.getElementById('RegisterButton');
-const logout = document.getElementById('LogoutButton');
+const Buttonlogout = document.getElementById('LogoutButton');
+const ButtonTransfer = document.getElementById('transfer');
+const ButtonSend = document.getElementById('send');
+const ButtonStory = document.getElementById('story');
 
+
+/* Лейблы */
 const LogErrors = document.getElementById('LogError');
 const RegErrors = document.getElementById('RegError');
 const balanceUser = document.getElementById('Balance-user');
+const transferErrors = document.getElementById('transferError');
 
 
 ToLogLink.addEventListener('click', (e) => {
@@ -34,7 +50,7 @@ ToRegLink.addEventListener('click', (e) => {
 let UserDB = {
     login: "",
     password: "",
-    balance: 0
+    balance: 100
 };
 
 function updateUI() {
@@ -69,7 +85,6 @@ ButtonRegister.addEventListener('click', (e) => {
     if(passwords.length >= 6)
     {
         UserDB.password = passwords;
-        UserDB.balance = 0;
         RegWindow.classList.add('hidden');
         loginWindow.classList.add('hidden');
         MainWindow.classList.remove('hidden');
@@ -85,13 +100,14 @@ ButtonRegister.addEventListener('click', (e) => {
 
 
 ButtonLogin.addEventListener('click', (e) => {
-    if(login == UserDB.login && password == UserDB.password)
+    if(login.value == UserDB.login && password.value == UserDB.password)
     {
-        UserDB.balance = 0;
         RegWindow.classList.add('hidden');
         loginWindow.classList.add('hidden');
         MainWindow.classList.remove('hidden');
         updateUI();
+
+        sessionStorage.setItem('activeUser', JSON.stringify(UserDB));
     }
     else
     {
@@ -102,21 +118,48 @@ ButtonLogin.addEventListener('click', (e) => {
     
 });
 
-logout.addEventListener('click', (e) => {
-    sessionStorage.clear();
-
-    UserDB = {
-        login: "",
-        password: "",
-        balance: 0
-    };
+Buttonlogout.addEventListener('click', (e) => {
 
     MainWindow.classList.add('hidden');
     loginWindow.classList.remove('hidden');
+    if(!TransferWindow.classList.contains('hidden')){
+        TransferWindow.classList.add('hidden');
+    }
 
     login.value = "";
     password.value = "";
     
     LogErrors.innerText = "";
     RegErrors.innerText = "";
+});
+
+
+ButtonTransfer.addEventListener('click', (e) => {
+    TransferWindow.classList.toggle('show');
+});
+
+ButtonSend.addEventListener('click', (e) => {
+    const amounts = parseFloat(amount.value);
+    const loginRecipients = loginRecipient.value;
+
+    if(amounts <= UserDB.balance){
+        UserDB.balance -= amounts;
+        transferErrors.innerText = "Перевод прошёл удачно!";
+        transferErrors.style.color = "green";
+        updateUI();
+        
+        amount.value = "";
+        loginRecipient.value = "";
+        setTimeout(()=> {
+            TransferWindow.classList.toggle('show');
+            transferErrors.style.color = "";
+            transferErrors.innerText = "";
+        }, 1500)
+
+    }
+    else{
+        transferErrors.innerText = "Ошибка перевода";
+        transferErrors.style.color = "red";
+    }
+
 });

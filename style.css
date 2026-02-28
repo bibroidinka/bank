@@ -1,35 +1,38 @@
-/* 1. Общие настройки страницы */
 body {
     margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%); /* Мягкий градиент */
+    padding: 20px; /* Добавляем отступы, чтобы окна не касались краев */
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%); 
     display: flex;
+    flex-direction: column; /* Ставим элементы друг под друга */
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh; /* Заменяем height на min-height */
     color: #333;
-}
+    box-sizing: border-box;
+}   
 
-/* 2. Контейнеры для окон (LoginWindow и RegWindow) */
+
 .auth-card, #LoginWindow, #RegWindow {
     background: #ffffff;
     padding: 40px;
     border-radius: 16px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); /* Глубокая мягкая тень */
-    width: 320px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); 
+    width: 95%;
+    max-width: 400px;
+    box-sizing: border-box;
     text-align: center;
     transition: all 0.3s ease;
 }
 
-/* 3. Заголовки */
+
 h2 {
     margin-bottom: 25px;
     font-weight: 600;
     color: #1a1a1a;
 }
 
-/* 4. Поля ввода (Инпуты) */
+
 .logins, .passwords {
     width: 100%;
     padding: 12px 15px;
@@ -38,12 +41,12 @@ h2 {
     border-radius: 8px;
     font-size: 14px;
     outline: none;
-    box-sizing: border-box; /* Чтобы padding не раздувал ширину */
+    box-sizing: border-box; 
     transition: all 0.2s ease;
 }
 
 .logins:focus, .passwords:focus {
-    border-color: #3182ce; /* Синий фокус */
+    border-color: #3182ce; 
     background-color: #f7fafc;
 }
 
@@ -67,10 +70,10 @@ h2 {
 }
 
 .LoginsButton:active {
-    transform: scale(0.98); /* Эффект нажатия */
+    transform: scale(0.98); 
 }
 
-/* 6. Ссылки и текст внизу */
+
 p {
     margin-top: 20px;
     font-size: 13px;
@@ -91,7 +94,7 @@ a:hover {
     display: none !important;
 }
 
-/* Основной контейнер личного кабинета */
+
 .MainWindows {
     background: white;
     padding: 30px;
@@ -102,14 +105,14 @@ a:hover {
     width: 100%;
 }
 
-/* Стиль для приветствия */
+
 #Welcome-user {
     color: #2d3748;
     font-size: 24px;
     margin-bottom: 20px;
 }
 
-/* Карточка с балансом (делаем её как банковскую карту) */
+
 .balance-card {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -134,7 +137,7 @@ a:hover {
     margin-top: 10px;
 }
 
-/* Кнопка выхода */
+
 .LogoutButton {
     background-color: #edf2f7;
     color: #4a5568;
@@ -149,4 +152,113 @@ a:hover {
 .LogoutButton:hover {
     background-color: #e2e8f0;
     color: #2d3748;
+}
+
+
+.card-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.transfers, .storys {
+    background: rgba(255, 255, 255, 0.15); 
+    backdrop-filter: blur(5px); 
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex: 1; 
+}
+
+.transfers:hover, .storys:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+.transfers:active, .storys:active {
+    transform: translateY(0);
+}
+
+
+#Balance-user {
+    margin-bottom: 5px;
+}
+
+
+.TransferWindows {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    width: 320px;
+    text-align: center;
+    margin-top: 20px;
+    box-sizing: border-box; 
+    
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px) scale(0.95); 
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+
+}
+
+/* Новое состояние "Показано" */
+.TransferWindows.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1); 
+}
+
+/* Поля ввода внутри перевода */
+.amounts, .loginrecipients {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid #edf2f7;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.amounts:focus, .loginrecipients:focus {
+    border-color: #764ba2; /* Фиолетовый фокус под цвет баланса */
+}
+
+/* Кнопка "Отправить" */
+.sends {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.sends:hover {
+    opacity: 0.9;
+}
+
+.sends:active {
+    transform: scale(0.97);
+}
+
+/* Ошибки перевода */
+.TransferErrors {
+    display: block;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #e53e3e;
 }

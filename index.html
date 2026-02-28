@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--Окна регистарции и логина-->
+    <div id="LoginWindow" class="auth-card">
+        <h2>Вход в банк</h2>
+        <input type="text" id="login" class="logins" placeholder="Логин">
+        <input type="password" id="password" class="passwords" placeholder="Пароль">
+        <button id="LoginButton" class="LoginsButton">Login</button>
+        <label id="LogError" class="Errors"></label>
+        <p>Ещё нет аккаунта? <a href="#" id="to-reg">Зарегистрироваться</a></p>
+    </div>
+
+    <div id="RegWindow" class="auth-card hidden">
+        <h2>Регистрация</h2>
+        <input type="text" id="CreateLogin" class="logins" placeholder="Придумайте логин">
+        <input type="password" id="CreatePassword" class="passwords" placeholder="Придумайте пароль">
+        <button id="RegisterButton" class="LoginsButton">Register</button>
+        <label id="RegError" class="Errors"></label>
+        <p>Уже есть аккаунт? <a href="#" id="to-log">Войти в банк</a></p>
+    </div>
+    <!--Основное окно сайта-->
+<div id="MainWindow" class="MainWindows hidden">
+    <h2 id="Welcome-user">Добрый день!</h2>
+    
+    <div class="balance-card">
+        <p>Доступный баланс</p>
+        <span id="Balance-user">0 $</span>
+    </div>
+
+    <button id="LogoutButton" class="LogoutButton">Выйти из системы</button>
+</div>
+
+   <script src="main.js"></script>
+</body>
+</html>

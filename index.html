@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Bank</title>
 </head>
 <body>
     <!--Окна регистарции и логина-->
@@ -29,13 +29,28 @@
 <div id="MainWindow" class="MainWindows hidden">
     <h2 id="Welcome-user">Добрый день!</h2>
     
-    <div class="balance-card">
-        <p>Доступный баланс</p>
-        <span id="Balance-user">0 $</span>
+<div class="balance-card">
+    <p>Доступный баланс</p>
+    <span id="Balance-user">100 $</span>
+    
+    <div class="card-actions">
+        <button id="transfer" class="transfers">Перевод</button>
+        <button id="story" class="storys">История</button>
     </div>
+</div>
 
     <button id="LogoutButton" class="LogoutButton">Выйти из системы</button>
 </div>
+
+    <!--окно для перевода средств-->
+    <div id="TransferWindow" class="TransferWindows">
+        <h3>Перевод средств</h3>
+        <input type="number" id="amount" class="amounts" placeholder="сумма">
+        <input type="text" id="loginRecipient" class="loginrecipients" placeholder="логин получателя">
+        <button id="send" class="sends">Подтвердить перевод</button>
+        <label id="transferError" class="TransferErrors"></label>
+
+    </div>
 
    <script src="main.js"></script>
 </body>

@@ -1,87 +1,90 @@
 body {
     margin: 0;
-    padding: 20px; /* Добавляем отступы, чтобы окна не касались краев */
+    padding: 20px;
     font-family: 'Segoe UI', Roboto, sans-serif;
-    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%); 
+    /* Темный глубокий градиент для фона страницы */
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); 
     display: flex;
-    flex-direction: column; /* Ставим элементы друг под друга */
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Заменяем height на min-height */
-    color: #333;
+    min-height: 100vh;
+    color: #f1f5f9; /* Светлый текст для контраста */
     box-sizing: border-box;
 }   
 
-
+/* Карточки входа и регистрации */
 .auth-card, #LoginWindow, #RegWindow {
-    background: #ffffff;
+    background: #1e293b; /* Темно-серый фон карточки */
     padding: 40px;
     border-radius: 16px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); 
     width: 95%;
     max-width: 400px;
     box-sizing: border-box;
     text-align: center;
     transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
-
 
 h2 {
     margin-bottom: 25px;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #ffffff;
 }
 
-
-.logins, .passwords {
+/* Темные поля ввода */
+.logins, .passwords, .amounts, .loginrecipients {
     width: 100%;
     padding: 12px 15px;
     margin-bottom: 15px;
-    border: 2px solid #edf2f7;
+    background: #0f172a; /* Инпуты еще темнее фона */
+    border: 1px solid #334155;
     border-radius: 8px;
     font-size: 14px;
+    color: #ffffff;
     outline: none;
     box-sizing: border-box; 
     transition: all 0.2s ease;
 }
 
-.logins:focus, .passwords:focus {
-    border-color: #3182ce; 
-    background-color: #f7fafc;
+.logins:focus, .passwords:focus, .amounts:focus, .loginrecipients:focus {
+    border-color: #3b82f6; 
+    background-color: #1e293b;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
-/* 5. Кнопки */
+/* Кнопки авторизации */
 .LoginsButton {
     width: 100%;
     padding: 12px;
-    background-color: #3182ce;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s ease, transform 0.1s ease;
+    transition: all 0.2s ease;
     margin-top: 10px;
 }
 
 .LoginsButton:hover {
-    background-color: #2b6cb0;
+    filter: brightness(1.2);
 }
 
 .LoginsButton:active {
     transform: scale(0.98); 
 }
 
-
 p {
     margin-top: 20px;
     font-size: 13px;
-    color: #718096;
+    color: #94a3b8;
 }
 
 a {
-    color: #3182ce;
+    color: #60a5fa;
     text-decoration: none;
     font-weight: 600;
 }
@@ -94,40 +97,38 @@ a:hover {
     display: none !important;
 }
 
-
+/* Главное окно */
 .MainWindows {
-    background: white;
+    background: #1e293b;
     padding: 30px;
     border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     text-align: center;
     max-width: 400px;
     width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-
 #Welcome-user {
-    color: #2d3748;
+    color: #f1f5f9;
     font-size: 24px;
     margin-bottom: 20px;
 }
 
-
+/* Карточка баланса остается яркой, но с более сочным градиентом */
 .balance-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
     color: white;
     padding: 25px;
     border-radius: 15px;
     margin: 20px 0;
-    box-shadow: 0 4px 15px rgba(118, 75, 162, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .balance-card p {
     font-size: 14px;
     opacity: 0.8;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    color: #e0e7ff;
 }
 
 #Balance-user {
@@ -137,23 +138,22 @@ a:hover {
     margin-top: 10px;
 }
 
-
+/* Кнопка выхода в темном стиле */
 .LogoutButton {
-    background-color: #edf2f7;
-    color: #4a5568;
+    background-color: #334155;
+    color: #cbd5e1;
     border: none;
     padding: 10px 20px;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.3s;
     margin-top: 10px;
 }
 
 .LogoutButton:hover {
-    background-color: #e2e8f0;
-    color: #2d3748;
+    background-color: #475569;
+    color: #ffffff;
 }
-
 
 .card-actions {
     display: flex;
@@ -162,10 +162,11 @@ a:hover {
     justify-content: center;
 }
 
+/* Кнопки внутри баланса (Glassmorphism) */
 .transfers, .storys {
-    background: rgba(255, 255, 255, 0.15); 
-    backdrop-filter: blur(5px); 
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: white;
     padding: 8px 16px;
     border-radius: 10px;
@@ -177,88 +178,56 @@ a:hover {
 }
 
 .transfers:hover, .storys:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
     transform: translateY(-2px);
 }
 
-.transfers:active, .storys:active {
-    transform: translateY(0);
-}
-
-
-#Balance-user {
-    margin-bottom: 5px;
-}
-
-
+/* Окно перевода в темном стиле */
 .TransferWindows {
-    background: #ffffff;
+    background: #1e293b;
     padding: 30px;
     border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    width: 320px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    width: 95%;
+    max-width: 320px;
     text-align: center;
     margin-top: 20px;
     box-sizing: border-box; 
+    border: 1px solid rgba(255, 255, 255, 0.05);
     
     opacity: 0;
     visibility: hidden;
     transform: translateY(-20px) scale(0.95); 
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    
-
 }
 
-/* Новое состояние "Показано" */
 .TransferWindows.show {
     opacity: 1;
     visibility: visible;
     transform: translateY(0) scale(1); 
 }
 
-/* Поля ввода внутри перевода */
-.amounts, .loginrecipients {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 2px solid #edf2f7;
-    border-radius: 8px;
-    font-size: 14px;
-    outline: none;
-    box-sizing: border-box;
-}
-
-.amounts:focus, .loginrecipients:focus {
-    border-color: #764ba2; /* Фиолетовый фокус под цвет баланса */
-}
-
-/* Кнопка "Отправить" */
 .sends {
     width: 100%;
     padding: 12px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s, opacity 0.2s;
+    transition: all 0.2s;
 }
 
 .sends:hover {
-    opacity: 0.9;
+    filter: brightness(1.2);
 }
 
-.sends:active {
-    transform: scale(0.97);
-}
-
-/* Ошибки перевода */
 .TransferErrors {
     display: block;
     margin-top: 10px;
     font-size: 13px;
-    color: #e53e3e;
+    color: #fb7185; /* Розово-красный для темной темы */
 }

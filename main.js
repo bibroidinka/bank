@@ -1,14 +1,14 @@
-/* переход между окнами для регистрации и логирования */
+/* ===== ПЕРЕХОДЫ МЕЖДУ ОКНАМИ ===== */
 const ToLogLink = document.getElementById('to-log');
 const ToRegLink = document.getElementById('to-reg');
-
 
 /* окна */
 const loginWindow = document.getElementById('LoginWindow');
 const RegWindow = document.getElementById('RegWindow');
 const MainWindow = document.getElementById('MainWindow');
 const TransferWindow = document.getElementById('TransferWindow');
-
+const overlay = document.getElementById('overlay');
+const StoryWindows = document.getElementById('StoryWindow');
 
 /* инпуты */
 const login = document.getElementById('login');
@@ -18,21 +18,80 @@ const createLogin = document.getElementById('CreateLogin');
 const amount = document.getElementById('amount');
 const loginRecipient = document.getElementById('loginRecipient');
 
-
-/* Кнопки */
+/* кнопки */
 const ButtonLogin = document.getElementById('LoginButton');
 const ButtonRegister = document.getElementById('RegisterButton');
 const Buttonlogout = document.getElementById('LogoutButton');
-const ButtonTransfer = document.getElementById('transfer');
+const ButtonTransfer = document.getElementById('transfer'); // кнопка в быстрых действиях
+const ButtonTransferFab = document.getElementById('nav-transfer-fab'); // FAB в нижнем навбаре
+const ButtonCloseTransfer = document.getElementById('close-transfer');
 const ButtonSend = document.getElementById('send');
 const ButtonStory = document.getElementById('story');
 
+/* пресеты суммы */
+const presetBtns = document.querySelectorAll('.preset-btn');
 
-/* Лейблы */
+/* лейблы */
 const LogErrors = document.getElementById('LogError');
 const RegErrors = document.getElementById('RegError');
 const balanceUser = document.getElementById('Balance-user');
 const transferErrors = document.getElementById('transferError');
+
+
+
+function openTransfer() {
+    TransferWindow.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            TransferWindow.classList.add('show');
+        });
+    });
+}
+
+function closeTransfer() {
+    TransferWindow.classList.remove('show');
+    overlay.classList.add('hidden');
+    setTimeout(() => {
+        TransferWindow.classList.add('hidden');
+        amount.value = '';
+        loginRecipient.value = '';
+        transferErrors.innerText = '';
+        presetBtns.forEach(b => b.classList.remove('active'));
+    }, 400);
+}
+
+function updateUI() {
+    const balanceDisplay = document.getElementById('Balance-user');
+    const welcomeDisplay = document.getElementById('Welcome-user');
+    const avatarEl = document.getElementById('user-avatar-initials');
+
+    if (balanceDisplay) {
+        balanceDisplay.innerText = UserDB.balance;
+    }
+    if (welcomeDisplay) {
+        welcomeDisplay.innerText = UserDB.login;
+    }
+    if (avatarEl && UserDB.login) {
+        avatarEl.innerText = UserDB.login.charAt(0).toUpperCase();
+    }
+}
+
+
+let UserDB = {
+    login: '',
+    password: '',
+    balance: 100,
+    story: []
+};
+
+const sessionData = sessionStorage.getItem('activeUser');
+if (sessionData) {
+    UserDB = JSON.parse(sessionData);
+    loginWindow.classList.add('hidden');
+    MainWindow.classList.remove('hidden');
+    updateUI();
+}
 
 
 ToLogLink.addEventListener('click', (e) => {
@@ -44,122 +103,131 @@ ToLogLink.addEventListener('click', (e) => {
 ToRegLink.addEventListener('click', (e) => {
     e.preventDefault();
     loginWindow.classList.add('hidden');
-    RegWindow.classList.remove("hidden");
+    RegWindow.classList.remove('hidden');
 });
 
-let UserDB = {
-    login: "",
-    password: "",
-    balance: 100
-};
 
-function updateUI() {
-    const balanceDisplay = document.getElementById('Balance-user');
-    const welcomeDisplay = document.getElementById('Welcome-user');
+/* ===== РЕГИСТРАЦИЯ ===== */
+ButtonRegister.addEventListener('click', () => {
+    UserDB.login = createLogin.value.trim();
+    const pwd = createPassword.value;
 
-    if (balanceDisplay) {
-        balanceDisplay.innerText = `${UserDB.balance} $`;
+    if (!UserDB.login) {
+        RegErrors.innerText = 'Введите логин';
+        return;
     }
-    
-    if (welcomeDisplay) {
-        welcomeDisplay.innerText = `Личный кабинет: ${UserDB.login}`;
+    if (pwd.length < 6) {
+        RegErrors.innerText = 'Пароль должен быть длиннее 6 символов';
+        return;
     }
-}
 
-
-const sessionData = sessionStorage.getItem('activeUser');
-
-if (sessionData) {
-
-    UserDB = JSON.parse(sessionData);
-    
-    loginWindow.classList.add('hidden');
+    UserDB.password = pwd;
+    RegWindow.classList.add('hidden');
     MainWindow.classList.remove('hidden');
     updateUI();
-}
+    sessionStorage.setItem('activeUser', JSON.stringify(UserDB));
+});
 
-
-ButtonRegister.addEventListener('click', (e) => {
-    UserDB.login = createLogin.value;
-    const passwords = createPassword.value;
-    if(passwords.length >= 6)
-    {
-        UserDB.password = passwords;
-        RegWindow.classList.add('hidden');
+ButtonLogin.addEventListener('click', () => {
+    if (login.value === UserDB.login && password.value === UserDB.password) {
         loginWindow.classList.add('hidden');
         MainWindow.classList.remove('hidden');
         updateUI();
         sessionStorage.setItem('activeUser', JSON.stringify(UserDB));
-
-    }
-    else{
-        RegErrors.innerText= "Пароль должен быть длинее 6 символов";
-        RegErrors.style.color = "red";
+    } else {
+        LogErrors.innerText = 'Неверный логин или пароль';
     }
 });
 
 
-ButtonLogin.addEventListener('click', (e) => {
-    if(login.value == UserDB.login && password.value == UserDB.password)
-    {
-        RegWindow.classList.add('hidden');
-        loginWindow.classList.add('hidden');
-        MainWindow.classList.remove('hidden');
-        updateUI();
-
-        sessionStorage.setItem('activeUser', JSON.stringify(UserDB));
-    }
-    else
-    {
-        LogErrors.innerText = "Пароль или Логин введенны неверно";
-        LogErrors.style.color = "red";
-    }
-    
-    
-});
-
-Buttonlogout.addEventListener('click', (e) => {
-
+Buttonlogout.addEventListener('click', () => {
+    closeTransfer();
     MainWindow.classList.add('hidden');
     loginWindow.classList.remove('hidden');
-    if(!TransferWindow.classList.contains('hidden')){
-        TransferWindow.classList.add('hidden');
-    }
-
-    login.value = "";
-    password.value = "";
-    
-    LogErrors.innerText = "";
-    RegErrors.innerText = "";
+    login.value = '';
+    password.value = '';
+    LogErrors.innerText = '';
+    RegErrors.innerText = '';
 });
 
 
-ButtonTransfer.addEventListener('click', (e) => {
-    TransferWindow.classList.toggle('show');
+ButtonTransfer.addEventListener('click', openTransfer);
+
+if (ButtonTransferFab) {
+    ButtonTransferFab.addEventListener('click', openTransfer);
+}
+if (ButtonCloseTransfer) {
+    ButtonCloseTransfer.addEventListener('click', closeTransfer);
+}
+
+overlay.addEventListener('click', closeTransfer);
+
+
+presetBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        presetBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        amount.value = btn.dataset.val;
+    });
 });
 
-ButtonSend.addEventListener('click', (e) => {
+
+ButtonSend.addEventListener('click', () => {
     const amounts = parseFloat(amount.value);
-    const loginRecipients = loginRecipient.value;
+    const recipient = loginRecipient.value.trim();
 
-    if(amounts <= UserDB.balance){
-        UserDB.balance -= amounts;
-        transferErrors.innerText = "Перевод прошёл удачно!";
-        transferErrors.style.color = "green";
-        updateUI();
-        
-        amount.value = "";
-        loginRecipient.value = "";
-        setTimeout(()=> {
-            TransferWindow.classList.toggle('show');
-            transferErrors.style.color = "";
-            transferErrors.innerText = "";
-        }, 1500)
-
+    if (!recipient) {
+        transferErrors.innerText = 'Укажите логин получателя';
+        transferErrors.style.color = 'var(--red)';
+        return;
     }
-    else{
-        transferErrors.innerText = "Ошибка перевода";
-        transferErrors.style.color = "red";
+    if (!amounts || amounts <= 0) {
+        transferErrors.innerText = 'Введите сумму перевода';
+        transferErrors.style.color = 'var(--red)';
+        return;
+    }
+    if (amounts > UserDB.balance) {
+        transferErrors.innerText = 'Недостаточно средств на счёте';
+        transferErrors.style.color = 'var(--red)';
+        return;
     }
 
+    UserDB.balance -= amounts;
+    UserDB.story += recipient + amounts;
+    updateUI();
+    sessionStorage.setItem('activeUser', JSON.stringify(UserDB));
+
+    transferErrors.innerText = '✓ Перевод выполнен успешно';
+    transferErrors.style.color = 'var(--green)';
+
+    setTimeout(() => {
+        closeTransfer();
+    }, 1500);
+});
+
+ButtonStory.addEventListener('click', () => {
+    StoryWindow.classList.remove('hidden');
+    overlay.classList.remove('hidden');
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            StoryWindow.classList.add('show');
+        });
+    });
+});
+
+document.getElementById('close-story').addEventListener('click', () => {
+    StoryWindow.classList.remove('show');
+    overlay.classList.add('hidden');
+    setTimeout(() => {
+        StoryWindow.classList.add('hidden');
+    }, 400);
+});
+
+overlay.addEventListener('click', () => {
+    // закрываем все открытые шторки
+    document.querySelectorAll('.sheet.show').forEach(sheet => {
+        sheet.classList.remove('show');
+        setTimeout(() => sheet.classList.add('hidden'), 400);
+    });
+    overlay.classList.add('hidden');
 });

@@ -1,57 +1,648 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>AURUM Bank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <!--Окна регистарции и логина-->
-    <div id="LoginWindow" class="auth-card">
-        <h2>Вход в банк</h2>
-        <input type="text" id="login" class="logins" placeholder="Логин">
-        <input type="password" id="password" class="passwords" placeholder="Пароль">
-        <button id="LoginButton" class="LoginsButton">Login</button>
-        <label id="LogError" class="Errors"></label>
-        <p>Ещё нет аккаунта? <a href="#" id="to-reg">Зарегистрироваться</a></p>
+
+    <div class="bg-canvas">
+        <div class="orb o1"></div>
+        <div class="orb o2"></div>
+        <div class="orb o3"></div>
     </div>
 
-    <div id="RegWindow" class="auth-card hidden">
-        <h2>Регистрация</h2>
-        <input type="text" id="CreateLogin" class="logins" placeholder="Придумайте логин">
-        <input type="password" id="CreatePassword" class="passwords" placeholder="Придумайте пароль">
-        <button id="RegisterButton" class="LoginsButton">Register</button>
-        <label id="RegError" class="Errors"></label>
-        <p>Уже есть аккаунт? <a href="#" id="to-log">Войти в банк</a></p>
+    <!-- ===== HEADER ===== -->
+    <header class="site-header">
+        <div class="logo">
+            <div class="logo-mark">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10 1L18 5.5V14.5L10 19L2 14.5V5.5L10 1Z" stroke="#c9a84c" stroke-width="1.2" fill="rgba(201,168,76,0.1)"/>
+                <circle cx="10" cy="10" r="2.5" fill="#c9a84c"/>
+            </svg>
+            </div>
+            <span class="logo-text">AURUM</span>
+        </div>
+        <div class="header-badge">Private Banking</div>
+    </header>
+
+    <!-- ========================================
+     AUTH: LOGIN
+======================================== -->
+    <div id="LoginWindow" class="screen auth-screen">
+        <div class="auth-card">
+            <div class="auth-eyebrow">Личный кабинет</div>
+            <h2 class="auth-title">Добро<br>пожаловать</h2>
+            <div class="field">
+                <div class="field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+                <input type="text" id="login" class="logins field-input" placeholder="Логин">
+            </div>
+            <div class="field">
+                <div class="field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+                <input type="password" id="password" class="passwords field-input" placeholder="Пароль">
+            </div>
+            <button id="LoginButton" class="btn-primary">
+            Войти в систему
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+            <label id="LogError" class="error-msg"></label>
+            <p class="auth-switch">Нет аккаунта? <a href="#" id="to-reg">Открыть счёт</a></p>
+        </div>
     </div>
-    <!--Основное окно сайта-->
-<div id="MainWindow" class="MainWindows hidden">
-    <h2 id="Welcome-user">Добрый день!</h2>
-    
-<div class="balance-card">
-    <p>Доступный баланс</p>
-    <span id="Balance-user">100 $</span>
-    
-    <div class="card-actions">
-        <button id="transfer" class="transfers">Перевод</button>
-        <button id="story" class="storys">История</button>
-    </div>
-</div>
 
-    <button id="LogoutButton" class="LogoutButton">Выйти из системы</button>
-</div>
-
-    <!--окно для перевода средств-->
-    <div id="TransferWindow" class="TransferWindows">
-        <h3>Перевод средств</h3>
-        <input type="number" id="amount" class="amounts" placeholder="сумма">
-        <input type="text" id="loginRecipient" class="loginrecipients" placeholder="логин получателя">
-        <button id="send" class="sends">Подтвердить перевод</button>
-        <label id="transferError" class="TransferErrors"></label>
-
+    <!-- ========================================
+     AUTH: REGISTER
+======================================== -->
+    <div id="RegWindow" class="screen auth-screen hidden">
+        <div class="auth-card">
+            <div class="auth-eyebrow">Регистрация</div>
+            <h2 class="auth-title">Открыть<br>счёт</h2>
+            <div class="field">
+                <div class="field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+                <input type="text" id="CreateLogin" class="logins field-input" placeholder="Придумайте логин">
+            </div>
+            <div class="field">
+                <div class="field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+                <input type="password" id="CreatePassword" class="passwords field-input" placeholder="Придумайте пароль">
+            </div>
+            <button id="RegisterButton" class="btn-primary">
+            Создать аккаунт
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+            <label id="RegError" class="error-msg"></label>
+            <p class="auth-switch">Уже есть аккаунт? <a href="#" id="to-log">Войти</a></p>
+        </div>
     </div>
 
-   <script src="main.js"></script>
+    <!-- ========================================
+     MAIN WINDOW
+======================================== -->
+    <div id="MainWindow" class="screen main-screen hidden">
+
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="topbar-left">
+                <div class="user-avatar" id="user-avatar-initials">А</div>
+                <div>
+                    <div class="topbar-greeting">Добрый день</div>
+                    <div class="topbar-name" id="Welcome-user">Пользователь</div>
+                </div>
+            </div>
+            <div class="topbar-right">
+                <button class="icon-btn notif-btn" id="notif-btn" title="Уведомления">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+                <span class="notif-dot"></span>
+            </button>
+                <button id="LogoutButton" class="icon-btn" title="Выйти">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+            </button>
+            </div>
+        </div>
+
+        <!-- Карта -->
+        <div class="bank-card">
+            <div class="bc-shine"></div>
+            <div class="bc-top">
+                <div class="chip">
+                    <div class="chip-body">
+                        <div class="chip-lines">
+                            <div class="cl cl1"></div>
+                            <div class="cl cl2"></div>
+                            <div class="cl cl3"></div>
+                        </div>
+                    </div>
+                </div>
+                <span class="card-type-label">AURUM GOLD</span>
+            </div>
+            <div class="bc-mid">
+                <div class="bal-label">Доступный баланс</div>
+                <div class="bal-value"><span id="Balance-user">0</span><span class="bal-cur"> $</span></div>
+            </div>
+            <div class="bc-bot">
+                <span class="card-num">•••• •••• •••• 4821</span>
+                <div class="mastercard-circles">
+                    <div class="mc mc1"></div>
+                    <div class="mc mc2"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Быстрые действия -->
+        <div class="quick-actions">
+            <button id="transfer" class="qa-item">
+            <div class="qa-ico qa-gold"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 16l-4-4 4-4M17 8l4 4-4 4M3 12h18"/></svg></div>
+            <span>Перевод</span>
+        </button>
+            <button class="qa-item" id="topup-btn">
+            <div class="qa-ico qa-green"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div>
+            <span>Пополнить</span>
+        </button>
+            <button class="qa-item" id="pay-btn">
+            <div class="qa-ico qa-blue"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg></div>
+            <span>Оплата</span>
+        </button>
+            <button class="qa-item" id="story">
+            <div class="qa-ico qa-purple"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2zM12 6v6l4 2"/></svg></div>
+            <span>История</span>
+        </button>
+        </div>
+
+        <!-- Статистика -->
+        <div class="stats-row">
+            <div class="stat-card sc-in">
+                <div class="sc-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg></div>
+                <div>
+                    <div class="sc-label">Доходы</div>
+                    <div class="sc-val" id="income-total">—</div>
+                </div>
+            </div>
+            <div class="stat-card sc-out">
+                <div class="sc-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M19 12l-7 7-7-7"/></svg></div>
+                <div>
+                    <div class="sc-label">Расходы</div>
+                    <div class="sc-val" id="expense-total">—</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Транзакции -->
+        <div class="section">
+            <div class="section-head">
+                <span class="section-title">Последние операции</span>
+                <a href="#" class="section-more" id="story-all">Все →</a>
+            </div>
+            <div class="tx-list" id="tx-list">
+                <div class="tx-empty">
+                    <div class="tx-empty-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M9 9h.01M15 9h.01M9 13h6"/></svg></div>
+                    <span>Транзакций пока нет</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Nav -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" id="nav-home">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>Главная</span>
+        </button>
+            <button class="nav-item" id="nav-payments">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+            <span>Платежи</span>
+        </button>
+            <button class="nav-item nav-center" id="nav-transfer-fab">
+            <div class="nav-center-inner">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 16l-4-4 4-4M17 8l4 4-4 4M3 12h18"/></svg>
+            </div>
+        </button>
+            <button class="nav-item" id="nav-analytics">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <span>Аналитика</span>
+        </button>
+            <button class="nav-item" id="nav-profile">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <span>Профиль</span>
+        </button>
+        </nav>
+    </div>
+
+    <!-- ========================================
+     OVERLAY (один на всех)
+======================================== -->
+    <div id="overlay" class="overlay hidden"></div>
+
+    <!-- ========================================
+     SHEET: ПЕРЕВОД
+======================================== -->
+    <div id="TransferWindow" class="sheet TransferWindows hidden">
+        <div class="sheet-drag-handle"></div>
+        <div class="sheet-head">
+            <div>
+                <div class="sheet-eyebrow">Быстрый перевод</div>
+                <h3 class="sheet-title">Перевод средств</h3>
+            </div>
+            <button id="close-transfer" class="icon-btn close-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        </div>
+        <div class="amount-row">
+            <span class="amount-dollar">$</span>
+            <input type="number" id="amount" class="amounts amount-hero" placeholder="0">
+        </div>
+        <div class="preset-amounts">
+            <button class="preset-btn" data-val="10">$10</button>
+            <button class="preset-btn" data-val="50">$50</button>
+            <button class="preset-btn" data-val="100">$100</button>
+            <button class="preset-btn" data-val="500">$500</button>
+        </div>
+        <div class="field mt20">
+            <div class="field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+            <input type="text" id="loginRecipient" class="loginrecipients field-input" placeholder="Логин получателя">
+        </div>
+        <button id="send" class="btn-primary sends mt12">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Подтвердить перевод
+    </button>
+        <label id="transferError" class="error-msg TransferErrors"></label>
+    </div>
+
+    <!-- ========================================
+     SHEET: ПОПОЛНИТЬ
+======================================== -->
+    <div id="TopupWindow" class="sheet hidden">
+        <div class="sheet-drag-handle"></div>
+        <div class="sheet-head">
+            <div>
+                <div class="sheet-eyebrow sheet-eyebrow--green">Пополнение счёта</div>
+                <h3 class="sheet-title">Пополнить баланс</h3>
+            </div>
+            <button id="close-topup" class="icon-btn close-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        </div>
+        <div class="amount-row amount-row--green">
+            <span class="amount-dollar amount-dollar--green">$</span>
+            <input type="number" id="topup-amount" class="amounts amount-hero" placeholder="0">
+        </div>
+        <div class="preset-amounts">
+            <button class="preset-btn preset-btn--green" data-val="50">$50</button>
+            <button class="preset-btn preset-btn--green" data-val="100">$100</button>
+            <button class="preset-btn preset-btn--green" data-val="500">$500</button>
+            <button class="preset-btn preset-btn--green" data-val="1000">$1000</button>
+        </div>
+        <div class="sheet-divider"></div>
+        <div class="payment-methods">
+            <div class="pm-label">Способ пополнения</div>
+            <div class="pm-list">
+                <label class="pm-item pm-item--active">
+                <input type="radio" name="topup-method" value="card" checked class="pm-radio">
+                <div class="pm-ico pm-ico--blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg></div>
+                <span>Банковская карта</span>
+                <div class="pm-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+            </label>
+                <label class="pm-item">
+                <input type="radio" name="topup-method" value="crypto" class="pm-radio">
+                <div class="pm-ico pm-ico--gold"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 8h5a2 2 0 010 4H9v4h5a2 2 0 000-4"/><path d="M9 8v8"/></svg></div>
+                <span>Криптовалюта</span>
+                <div class="pm-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+            </label>
+                <label class="pm-item">
+                <input type="radio" name="topup-method" value="transfer" class="pm-radio">
+                <div class="pm-ico pm-ico--purple"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16l-4-4 4-4M17 8l4 4-4 4M3 12h18"/></svg></div>
+                <span>Банковский перевод</span>
+                <div class="pm-check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div>
+            </label>
+            </div>
+        </div>
+        <button id="topup-confirm" class="btn-primary btn-green mt16">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+        Пополнить счёт
+    </button>
+        <label id="topupError" class="error-msg"></label>
+    </div>
+
+    <!-- ========================================
+     SHEET: ОПЛАТА
+======================================== -->
+    <div id="PayWindow" class="sheet hidden">
+        <div class="sheet-drag-handle"></div>
+        <div class="sheet-head">
+            <div>
+                <div class="sheet-eyebrow sheet-eyebrow--blue">Оплата услуг</div>
+                <h3 class="sheet-title">Выберите услугу</h3>
+            </div>
+            <button id="close-pay" class="icon-btn close-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        </div>
+        <div class="services-grid">
+            <button class="service-btn" id="svc-phone">
+            <div class="svc-ico svc-ico--blue"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.11 1.22 2 2 0 012.11 0h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 14.92z"/></svg></div>
+            <span>Связь</span>
+        </button>
+            <button class="service-btn" id="svc-internet">
+            <div class="svc-ico svc-ico--green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg></div>
+            <span>Интернет</span>
+        </button>
+            <button class="service-btn" id="svc-utility">
+            <div class="svc-ico svc-ico--gold"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+            <span>Коммунальные</span>
+        </button>
+            <button class="service-btn" id="svc-tax">
+            <div class="svc-ico svc-ico--red"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+            <span>Налоги</span>
+        </button>
+            <button class="service-btn" id="svc-transport">
+            <div class="svc-ico svc-ico--purple"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8zM5.5 21a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 21a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/></svg></div>
+            <span>Транспорт</span>
+        </button>
+            <button class="service-btn" id="svc-other">
+            <div class="svc-ico svc-ico--gray"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></div>
+            <span>Другое</span>
+        </button>
+        </div>
+        <div class="sheet-divider"></div>
+        <div class="field">
+            <div class="field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+            <input type="text" id="pay-account" class="field-input" placeholder="Номер счёта / лицевой счёт">
+        </div>
+        <div class="field">
+            <div class="field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg></div>
+            <input type="number" id="pay-amount" class="amounts field-input" placeholder="Сумма оплаты">
+        </div>
+        <button id="pay-confirm" class="btn-primary btn-blue mt8">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+        Оплатить
+    </button>
+        <label id="payError" class="error-msg"></label>
+    </div>
+
+    <!-- ========================================
+     SHEET: ИСТОРИЯ
+======================================== -->
+    <div id="StoryWindow" class="sheet hidden">
+        <div class="sheet-drag-handle"></div>
+        <div class="sheet-head">
+            <div>
+                <div class="sheet-eyebrow sheet-eyebrow--purple">История операций</div>
+                <h3 class="sheet-title">Все транзакции</h3>
+            </div>
+            <button id="close-story" class="icon-btn close-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        </div>
+        <div class="history-filters">
+            <button class="hf-btn hf-active" data-filter="all">Все</button>
+            <button class="hf-btn" data-filter="income">Доходы</button>
+            <button class="hf-btn" data-filter="expense">Расходы</button>
+        </div>
+        <div class="tx-list tx-list--full" id="story-tx-list">
+            <div class="tx-empty">
+                <div class="tx-empty-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M9 9h.01M15 9h.01M9 13h6"/></svg></div>
+                <span>Транзакций пока нет</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================
+     SHEET: ПЛАТЕЖИ (навбар)
+======================================== -->
+    <div id="PaymentsWindow" class="sheet hidden">
+        <div class="sheet-drag-handle"></div>
+        <div class="sheet-head">
+            <div>
+                <div class="sheet-eyebrow sheet-eyebrow--blue">Платежи</div>
+                <h3 class="sheet-title">Быстрые платежи</h3>
+            </div>
+            <button id="close-payments" class="icon-btn close-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        </div>
+        <div class="payment-categories">
+            <div class="pc-row">
+                <button class="pc-btn" id="pc-mobile">
+                <div class="pc-ico pc-ico--blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+                <span>Мобильный</span>
+            </button>
+                <button class="pc-btn" id="pc-internet">
+                <div class="pc-ico pc-ico--green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg></div>
+                <span>Интернет</span>
+            </button>
+                <button class="pc-btn" id="pc-electricity">
+                <div class="pc-ico pc-ico--gold"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+                <span>Электроэнергия</span>
+            </button>
+                <button class="pc-btn" id="pc-water">
+                <div class="pc-ico pc-ico--blue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6 9 4 13 4 16a8 8 0 0016 0c0-3-2-7-8-14z"/></svg></div>
+                <span>Водоснабжение</span>
+            </button>
+            </div>
+            <div class="pc-row">
+                <button class="pc-btn" id="pc-gas">
+                <div class="pc-ico pc-ico--red"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg></div>
+                <span>Газ</span>
+            </button>
+                <button class="pc-btn" id="pc-tv">
+                <div class="pc-ico pc-ico--purple"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg></div>
+                <span>Телевидение</span>
+            </button>
+                <button class="pc-btn" id="pc-insurance">
+                <div class="pc-ico pc-ico--green"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                <span>Страхование</span>
+            </button>
+                <button class="pc-btn" id="pc-education">
+                <div class="pc-ico pc-ico--gold"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+                <span>Образование</span>
+            </button>
+            </div>
+        </div>
+        <div class="sheet-divider"></div>
+        <div class="field">
+            <div class="field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+            <input type="text" id="payments-account" class="field-input" placeholder="Номер счёта / договора">
+        </div>
+        <div class="field">
+            <div class="field-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg></div>
+            <input type="number" id="payments-amount" class="amounts field-input" placeholder="Сумма">
+        </div>
+        <button id="payments-confirm" class="btn-primary btn-blue mt8">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>
+        Оплатить
+    </button>
+        <label id="paymentsError" class="error-msg"></label>
+    </div>
+
+    <!-- ========================================
+     SHEET: АНАЛИТИКА
+======================================== -->
+    <div id="AnalyticsWindow" class="sheet hidden">
+        <div class="sheet-drag-handle"></div>
+        <div class="sheet-head">
+            <div>
+                <div class="sheet-eyebrow">Финансы</div>
+                <h3 class="sheet-title">Аналитика</h3>
+            </div>
+            <button id="close-analytics" class="icon-btn close-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        </div>
+        <div class="analytics-period">
+            <button class="ap-btn ap-active" data-period="week">Неделя</button>
+            <button class="ap-btn" data-period="month">Месяц</button>
+            <button class="ap-btn" data-period="year">Год</button>
+        </div>
+        <div class="analytics-summary">
+            <div class="as-card as-card--in">
+                <div class="as-label">Доходы</div>
+                <div class="as-val" id="analytics-income">0 $</div>
+                <div class="as-change as-change--up">↑ 0%</div>
+            </div>
+            <div class="as-card as-card--out">
+                <div class="as-label">Расходы</div>
+                <div class="as-val" id="analytics-expense">0 $</div>
+                <div class="as-change as-change--down">↓ 0%</div>
+            </div>
+        </div>
+        <div class="analytics-chart-placeholder">
+            <div class="chart-bars" id="chart-bars">
+                <div class="chart-bar" style="height:30%">
+                    <div class="cb-fill cb-fill--low"></div>
+                </div>
+                <div class="chart-bar" style="height:55%">
+                    <div class="cb-fill"></div>
+                </div>
+                <div class="chart-bar" style="height:40%">
+                    <div class="cb-fill cb-fill--mid"></div>
+                </div>
+                <div class="chart-bar" style="height:70%">
+                    <div class="cb-fill"></div>
+                </div>
+                <div class="chart-bar" style="height:45%">
+                    <div class="cb-fill cb-fill--mid"></div>
+                </div>
+                <div class="chart-bar" style="height:90%">
+                    <div class="cb-fill cb-fill--high"></div>
+                </div>
+                <div class="chart-bar" style="height:60%">
+                    <div class="cb-fill"></div>
+                </div>
+            </div>
+            <div class="chart-labels">
+                <span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span>
+            </div>
+        </div>
+        <div class="analytics-categories">
+            <div class="ac-label">Категории расходов</div>
+            <div class="ac-list" id="analytics-cats">
+                <div class="ac-item">
+                    <div class="ac-dot" style="background:var(--gold)"></div>
+                    <span class="ac-name">Переводы</span>
+                    <div class="ac-bar-wrap">
+                        <div class="ac-bar" style="width:0%;background:var(--gold)"></div>
+                    </div>
+                    <span class="ac-pct" id="ac-transfers">0%</span>
+                </div>
+                <div class="ac-item">
+                    <div class="ac-dot" style="background:var(--blue)"></div>
+                    <span class="ac-name">Платежи</span>
+                    <div class="ac-bar-wrap">
+                        <div class="ac-bar" style="width:0%;background:var(--blue)"></div>
+                    </div>
+                    <span class="ac-pct" id="ac-payments">0%</span>
+                </div>
+                <div class="ac-item">
+                    <div class="ac-dot" style="background:var(--purple)"></div>
+                    <span class="ac-name">Другое</span>
+                    <div class="ac-bar-wrap">
+                        <div class="ac-bar" style="width:0%;background:var(--purple)"></div>
+                    </div>
+                    <span class="ac-pct" id="ac-other">0%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================
+     SHEET: ПРОФИЛЬ
+======================================== -->
+    <div id="ProfileWindow" class="sheet hidden">
+        <div class="sheet-drag-handle"></div>
+        <div class="sheet-head">
+            <div>
+                <div class="sheet-eyebrow">Аккаунт</div>
+                <h3 class="sheet-title">Профиль</h3>
+            </div>
+            <button id="close-profile" class="icon-btn close-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        </div>
+        <div class="profile-hero">
+            <div class="profile-avatar" id="profile-avatar">А</div>
+            <div class="profile-name" id="profile-name">Пользователь</div>
+            <div class="profile-tier">
+                <svg width="12" height="12" viewBox="0 0 20 20" fill="none"><path d="M10 1L18 5.5V14.5L10 19L2 14.5V5.5L10 1Z" stroke="#c9a84c" stroke-width="1.5"/><circle cx="10" cy="10" r="2" fill="#c9a84c"/></svg> AURUM GOLD
+            </div>
+        </div>
+        <div class="profile-stats">
+            <div class="ps-item">
+                <div class="ps-val" id="profile-balance">0 $</div>
+                <div class="ps-label">Баланс</div>
+            </div>
+            <div class="ps-divider"></div>
+            <div class="ps-item">
+                <div class="ps-val" id="profile-tx-count">0</div>
+                <div class="ps-label">Транзакций</div>
+            </div>
+            <div class="ps-divider"></div>
+            <div class="ps-item">
+                <div class="ps-val">Gold</div>
+                <div class="ps-label">Статус</div>
+            </div>
+        </div>
+        <div class="profile-menu">
+            <button class="pm-row" id="profile-security">
+            <div class="pmr-ico pmr-ico--gold"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+            <span>Безопасность</span>
+            <svg class="pmr-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+            <button class="pm-row" id="profile-notifications">
+            <div class="pmr-ico pmr-ico--blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg></div>
+            <span>Уведомления</span>
+            <svg class="pmr-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+            <button class="pm-row" id="profile-support">
+            <div class="pmr-ico pmr-ico--green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+            <span>Поддержка</span>
+            <svg class="pmr-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+            <button class="pm-row pm-row--danger" id="profile-logout">
+            <div class="pmr-ico pmr-ico--red"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg></div>
+            <span>Выйти из аккаунта</span>
+            <svg class="pmr-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        </div>
+    </div>
+
+    <!-- ========================================
+     SHEET: УВЕДОМЛЕНИЯ
+======================================== -->
+    <div id="NotifWindow" class="sheet hidden">
+        <div class="sheet-drag-handle"></div>
+        <div class="sheet-head">
+            <div>
+                <div class="sheet-eyebrow">Центр</div>
+                <h3 class="sheet-title">Уведомления</h3>
+            </div>
+            <button id="close-notif" class="icon-btn close-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        </div>
+        <div class="notif-list" id="notif-list">
+            <div class="notif-item notif-item--unread">
+                <div class="notif-ico notif-ico--gold"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                <div class="notif-body">
+                    <div class="notif-title">Добро пожаловать в AURUM</div>
+                    <div class="notif-text">Ваш счёт успешно создан и готов к использованию.</div>
+                    <div class="notif-time">Только что</div>
+                </div>
+            </div>
+            <div class="notif-item">
+                <div class="notif-ico notif-ico--blue"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg></div>
+                <div class="notif-body">
+                    <div class="notif-title">Карта активирована</div>
+                    <div class="notif-text">Ваша карта AURUM GOLD •••• 4821 активна.</div>
+                    <div class="notif-time">Сегодня</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
 </body>
+
 </html>
